@@ -117,6 +117,8 @@ Cycle one behavior at a time, not one feature. A feature like "parse iloc constr
 
 When making notable changes (new features, bug fixes, breaking changes, etc.), add an entry to the `Unreleased` section in `CHANGELOG.md`. Use the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format with the appropriate change type: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, or `Security`.
 
+After updating, read through the whole `Unreleased` section again. Each change type must appear at most once, in the Keep a Changelog order above, with all its entries under that one heading. Duplicate headings (a second `Security`, for example) have slipped in several times.
+
 ## Adding Tags
 
 1. Add hex-keyed entry in the appropriate `src/tag-names-*-ifd.js`
