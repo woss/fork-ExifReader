@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.45.0] - 2026-09-10
+
 ### Changed
 
 - A custom build that includes neither the `exif` nor the `xmp` module is now
@@ -102,7 +104,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   a custom `decompress` function that returns bytes starting partway into a
   larger buffer, which is what Node's `zlib` returns for a small result. That
   last case also dropped the XMP tags of a JPEG XL file whose metadata box is
-  Brotli compressed. The readers now slice relative to the view's own position.
+  Brotli compressed. The readers now slice relative to the view's own position,
+  and a `DataView` that is a window into a larger buffer is copied before it
+  is parsed
+  ([GHSA-67g5-g9ch-x4fj](https://github.com/mattiasw/ExifReader/security/advisories/GHSA-67g5-g9ch-x4fj)).
 - Fixed an information disclosure vulnerability where a crafted image could put
   bytes from outside the data being parsed into the Exif thumbnail. The offset
   and the length of the thumbnail are declared by the file and were used
@@ -135,14 +140,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   its other metadata still returns that metadata. A file with more than 255
   ICC segments whose first 255 hold a complete profile now returns that
   profile, where the whole ICC group used to be discarded.
-
-### Security
-
-- Fixed an information disclosure vulnerability where metadata extraction could
-  return bytes from memory outside the image data. It affected `loadView()`
-  when it was passed a `DataView` that was a window into a larger buffer, and
-  both `load()` and `loadView()` when a custom `decompress` function was used
-  ([GHSA-67g5-g9ch-x4fj](https://github.com/mattiasw/ExifReader/security/advisories/GHSA-67g5-g9ch-x4fj)).
 
 ## [4.44.1] - 2026-09-05
 
@@ -1512,7 +1509,8 @@ in the browser.
 - Parse Exif tags from JPEG files using the FileReader API.
 - Text descriptions for the 0th IFD, Exif IFD, and GPS IFD tags.
 
-[Unreleased]: https://github.com/mattiasw/ExifReader/compare/v4.44.1...HEAD
+[Unreleased]: https://github.com/mattiasw/ExifReader/compare/v4.45.0...HEAD
+[4.45.0]: https://github.com/mattiasw/ExifReader/compare/v4.44.1...v4.45.0
 [4.44.1]: https://github.com/mattiasw/ExifReader/compare/v4.44.0...v4.44.1
 [4.44.0]: https://github.com/mattiasw/ExifReader/compare/v4.43.0...v4.44.0
 [4.43.0]: https://github.com/mattiasw/ExifReader/compare/v4.42.0...v4.43.0
